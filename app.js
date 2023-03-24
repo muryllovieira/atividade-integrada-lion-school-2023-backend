@@ -66,6 +66,59 @@ app.use((request, response, next) => {
             response.status(500)
         }
     })
+
+    //EndPoint para listar os dados de um aluno filtrando pela matricula
+    app.get('/v1/lion-school/alunos/:matricula', cors(), async function (request, response, next){
+
+        let statusCode
+        let numeroMatricula = request.params.matricula
+        let dados = {}
+
+        if (numeroMatricula === undefined || numeroMatricula === "" || isNaN(numeroMatricula) ){ 
+            statusCode = 400
+            dados.message = 'Não foi possivel processar, pois os dados de entrada (matricula) que foi enviado não corrensponde ao que foi exigido. Confira o valor, pois não pode ser vazio, precisa ser numeros';
+        } else {
+            //Chamada da função para listar os dados de um aluno filtrando pela matricula
+            let dadosAluno = alunos.getAlunosMatricula(numeroMatricula)
+
+            if(dadosAluno){
+                statusCode = 200
+                dados = dadosAluno
+            } else {
+                statusCode = 404
+            }
+        }
+        //Retorna o codigo e o JSON
+        response.status(statusCode)
+        response.json(dados)
+
+    })
+    //EndPoint para listar os dados de todos os alunos filtrando pela sigla do curso
+    app.get('/v1/lion-school/alunos', cors(), async function (request, response, next){
+
+        let statusCode
+        let siglaCurso = request.query.curso
+        let dados = {}
+
+        if (siglaCurso === undefined || siglaCurso === ""){ //|| !isNaN(siglaCurso) ){ 
+            statusCode = 400
+            dados.message = 'Não foi possivel processar, pois os dados de entrada (siglaCurso) que foi enviado não corrensponde ao que foi exigido. Confira o valor, pois não pode ser vazio e precisa ser caracteres';
+        } else {
+            //Chamada da função para listar os dados de um aluno filtrando pela matricula
+            let dadosAlunos = alunos.getAlunosCurso(siglaCurso)
+
+            if(dadosAlunos){
+                statusCode = 200
+                dados = dadosAlunos
+            } else {
+                statusCode = 404
+            }
+        }
+        //Retorna o codigo e o JSON
+        response.status(statusCode)
+        response.json(dados)
+
+    })
 //Roda o serviço da API para ficar aguardando requisições
 app.listen(8080, function () {
     console.log('Servidor aguardando requisições na porta 8080.');
