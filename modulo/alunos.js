@@ -750,12 +750,43 @@ const getAlunosCurso = function (siglaCurso) {
     }
  }
 
+const getAlunosStatus = function (statusAluno){
+    let statusA = statusAluno.toUpperCase()
+    let jsonAlunosStatus = {}
+    let arrayAlunosStatus = []
+    let statusFun = false
+
+    jsonAlunosStatus.alunos = arrayAlunosStatus
+
+    alunos.forEach(function (statusAlunos){
+        
+        if(statusAlunos.status.toUpperCase() == statusA) {
+            let jsonStatus = {}
+            jsonStatus.nome = statusAlunos.nome
+            jsonStatus.foto = statusAlunos.foto
+            jsonStatus.curso = statusAlunos.curso[0].nome
+            jsonStatus.sexo = statusAlunos.sexo
+            jsonStatus.matricula = statusAlunos.matricula
+            jsonStatus.status = statusAlunos.status
+            statusFun = true
+            arrayAlunosStatus.push(jsonStatus)
+        }
+    })
+    if (statusFun) {
+        return jsonAlunosStatus
+    } else {
+        return false
+    }
+}
 //console.log(getAlunos());
 //console.log(getAlunosMatricula('20151001019'));
 //console.log(getAlunosCurso('ds'));
+//console.log(getAlunosStatus('finalizado'));
+
 
 module.exports = {
     getAlunos,
     getAlunosMatricula,
-    getAlunosCurso
+    getAlunosCurso,
+    getAlunosStatus
 }
