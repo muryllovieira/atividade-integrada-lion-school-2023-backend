@@ -705,6 +705,12 @@ const getAlunos = function () {
     return jsonAlunos
 }
 
+function getInitials(name) {
+    const words = name.split(' ');
+    const initials = words.map(word => word.charAt(0).toUpperCase());
+    return initials.join('');
+  }
+
 const getAlunosMatricula = function (matricula) {
 
     let jsonAlunoMatricula = {};
@@ -714,6 +720,9 @@ const getAlunosMatricula = function (matricula) {
     alunos.forEach(function (aluno) {
         if (aluno.matricula == numeroMatricula) {
             jsonAlunoMatricula = aluno
+            aluno.curso[0].disciplinas.forEach(function (disciplina){
+                disciplina.sigla = getInitials(disciplina.nome)
+            })
             status = true
         }
     })
@@ -726,7 +735,7 @@ const getAlunosMatricula = function (matricula) {
 }
 
 const getAlunosCurso = function (siglaCurso) {
-    let curso = siglaCurso.toUpperCase()
+    let curso = siglaCurso
     let jsonAlunosCurso = {};
     let arrayAlunosCurso = [];
     let status = false
@@ -735,7 +744,7 @@ const getAlunosCurso = function (siglaCurso) {
 
     alunos.forEach(function (aluno) {
         let jsonAluno = {}
-        if (aluno.curso[0].sigla == curso) {
+        if (aluno.curso[0].sigla.toUpperCase() == curso.toUpperCase()) {
             jsonAluno = aluno
             status = true
             arrayAlunosCurso.push(jsonAluno)
@@ -756,8 +765,6 @@ const getAlunosStatus = function (statusAluno){
     let arrayAlunosStatus = []
     let statusFun = false
 
-    jsonAlunosStatus.alunos = arrayAlunosStatus
-
     alunos.forEach(function (statusAlunos){
         
         if(statusAlunos.status.toUpperCase() == statusA) {
@@ -772,6 +779,9 @@ const getAlunosStatus = function (statusAluno){
             arrayAlunosStatus.push(jsonStatus)
         }
     })
+
+    jsonAlunosStatus.alunos = arrayAlunosStatus
+    
     if (statusFun) {
         return jsonAlunosStatus
     } else {
@@ -779,8 +789,8 @@ const getAlunosStatus = function (statusAluno){
     }
 }
 //console.log(getAlunos());
-//console.log(getAlunosMatricula('20151001019'));
-//console.log(getAlunosCurso('ds'));
+console.log(getAlunosMatricula('20151001019'));
+//console.log(getAlunosCurso('rds'));
 //console.log(getAlunosStatus('finalizado'));
 
 
