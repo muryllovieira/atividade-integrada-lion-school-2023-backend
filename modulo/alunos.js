@@ -740,11 +740,14 @@ const getAlunosCurso = function (siglaCurso) {
     let arrayAlunosCurso = [];
     let status = false
 
-    jsonAlunosCurso.alunos = arrayAlunosCurso
-
     alunos.forEach(function (aluno) {
         let jsonAluno = {}
         if (aluno.curso[0].sigla.toUpperCase() == curso.toUpperCase()) {
+            if (curso == "DS") {
+                jsonAlunosCurso.nomeCurso = "Desenvolvimento de Sistemas"
+            } else {
+                jsonAlunosCurso.nomeCurso = "Redes de Computadores"
+            }
             jsonAluno = aluno
             status = true
             arrayAlunosCurso.push(jsonAluno)
@@ -753,6 +756,7 @@ const getAlunosCurso = function (siglaCurso) {
     })
 
     if (status) {
+        jsonAlunosCurso.alunos = arrayAlunosCurso
         return jsonAlunosCurso
     } else {
         return false
@@ -789,8 +793,8 @@ const getAlunosStatus = function (statusAluno){
     }
 }
 //console.log(getAlunos());
-console.log(getAlunosMatricula('20151001019'));
-//console.log(getAlunosCurso('rds'));
+//console.log(getAlunosMatricula('20151001019'));
+console.log(getAlunosCurso('rds'));
 //console.log(getAlunosStatus('finalizado'));
 
 
