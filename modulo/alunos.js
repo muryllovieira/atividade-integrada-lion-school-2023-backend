@@ -793,8 +793,8 @@ const getAlunosStatus = function (statusAluno){
     }
 }
 //console.log(getAlunos());
-//console.log(getAlunosMatricula('20151001019'));
-console.log(getAlunosCurso('rds'));
+console.log(getAlunosMatricula('20151001019'));
+//console.log(getAlunosCurso('rds'));
 //console.log(getAlunosStatus('finalizado'));
 
 
