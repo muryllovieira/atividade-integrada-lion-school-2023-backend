@@ -1,4 +1,4 @@
-var alunos = [
+ var alunos = [
 
     {
         "foto": "https://cdn.icon-icons.com/icons2/1879/PNG/512/iconfinder-4-avatar-2754580_120522.png",
@@ -763,13 +763,13 @@ const getAlunosCurso = function (siglaCurso) {
     }
  }
 
-const getAlunosStatus = function (statusAluno){
+const getAlunosStatus = function (statusAluno, jsonAlunosCurso) {
     let statusA = statusAluno.toUpperCase()
     let jsonAlunosStatus = {}
     let arrayAlunosStatus = []
     let statusFun = false
 
-    alunos.forEach(function (statusAlunos){
+    jsonAlunosCurso.forEach(function (statusAlunos){
         
         if(statusAlunos.status.toUpperCase() == statusA) {
             let jsonStatus = {}
@@ -802,5 +802,6 @@ module.exports = {
     getAlunos,
     getAlunosMatricula,
     getAlunosCurso,
-    getAlunosStatus
+    getAlunosStatus,
+    alunos
 }

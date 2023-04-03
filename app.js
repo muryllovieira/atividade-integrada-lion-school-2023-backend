@@ -16,6 +16,7 @@ const bodyParser = require('body-parser');
 //Import do arquivo modulo (funções)
 const cursos = require('./modulo/cursos.js');
 const alunos = require('./modulo/alunos.js');
+const alunosJson = require('./modulo/alunos.js');
 
 //Cria um objeto com as caracteristicas do express
 const app = express();
@@ -72,11 +73,12 @@ app.get('/v1/lion-school/alunos', cors(), async function (request, response, nex
     let curso = request.query.curso
     let status = request.query.status
     let dados = {}
+    let dadosAlunos1
 
     console.log("curso");
-    if (status != null) {
+    if (status != undefined && curso == undefined) {
             //Chamada da função para listar os dados de um aluno filtrando pelo status
-            let dadosAlunos1 = alunos.getAlunosStatus(status)
+            dadosAlunos1 = alunos.getAlunosStatus(status, alunosJson.alunos)
             if (dadosAlunos1) {
                 statusCode = 200
                 dados = dadosAlunos1
@@ -85,7 +87,7 @@ app.get('/v1/lion-school/alunos', cors(), async function (request, response, nex
                 dados.message = 'Status inválido'
             }
 
-    } else if (curso != null) {
+    } else if (curso != undefined && status == undefined) {
             //Chamada da função para listar os dados de um aluno filtrando pelo curso
             let dadosAlunos = alunos.getAlunosCurso(curso)
 
@@ -96,6 +98,21 @@ app.get('/v1/lion-school/alunos', cors(), async function (request, response, nex
                 statusCode = 404
             }
 
+    } else if (curso != undefined && status != undefined) {
+        if(!isNaN(curso) || !isNaN(status)) {
+            statusCode = 400
+            dados.message = 'Status ou Curso inválido'
+        } else {
+            let alunosCurso = alunos.getAlunosCurso(curso)
+            dadosAlunos1 = alunos.getAlunosStatus(status, alunosCurso.alunos)
+            if(dadosAlunos1){
+                statusCode = 200
+                dados = dadosAlunos1
+            } else {
+                statusCode = 404
+                dados.message = 'Curso invalido'
+            }
+        }
     } else {
         //Chamada da função que vai listar todos os cursos
         let alunos2 = alunos.getAlunos()
