@@ -776,9 +776,11 @@ const getAlunosStatus = function (statusAluno, jsonAlunosCurso) {
             jsonStatus.nome = statusAlunos.nome
             jsonStatus.foto = statusAlunos.foto
             jsonStatus.curso = statusAlunos.curso[0].nome
+            jsonStatus.conclusao = statusAlunos.curso[0].conclusao
             jsonStatus.sexo = statusAlunos.sexo
             jsonStatus.matricula = statusAlunos.matricula
             jsonStatus.status = statusAlunos.status
+            //jsonStatus.status = statusAlunos.curso[0].conclusao
             statusFun = true
             arrayAlunosStatus.push(jsonStatus)
         }
@@ -793,9 +795,9 @@ const getAlunosStatus = function (statusAluno, jsonAlunosCurso) {
     }
 }
 //console.log(getAlunos());
-console.log(getAlunosMatricula('20151001019'));
+//console.log(getAlunosMatricula('20151001019'));
 //console.log(getAlunosCurso('rds'));
-//console.log(getAlunosStatus('finalizado'));
+//console.log(getAlunosStatus("cursando"));
 
 
 module.exports = {
