@@ -75,7 +75,9 @@ app.get('/v1/lion-school/alunos', cors(), async function (request, response, nex
     let dados = {}
     let dadosAlunos1
 
-    console.log("curso");
+    //console.log("curso");
+
+    //Identificar se a algo na url referente a status para conseguir tratar a função 
     if (status != undefined && curso == undefined) {
             //Chamada da função para listar os dados de um aluno filtrando pelo status
             dadosAlunos1 = alunos.getAlunosStatus(status, alunosJson.alunos)
@@ -87,6 +89,7 @@ app.get('/v1/lion-school/alunos', cors(), async function (request, response, nex
                 dados.message = 'Status inválido'
             }
 
+    //Identificar se a algo na url referente a dados para conseguir tratar a função 
     } else if (curso != undefined && status == undefined) {
             //Chamada da função para listar os dados de um aluno filtrando pelo curso
             let dadosAlunos = alunos.getAlunosCurso(curso)
@@ -98,6 +101,7 @@ app.get('/v1/lion-school/alunos', cors(), async function (request, response, nex
                 statusCode = 404
             }
 
+    //Identificar se a algo na url referente a curso e status, caso tenha os dois, traz as duas funções
     } else if (curso != undefined && status != undefined) {
         if(!isNaN(curso) || !isNaN(status)) {
             statusCode = 400
@@ -113,6 +117,8 @@ app.get('/v1/lion-school/alunos', cors(), async function (request, response, nex
                 dados.message = 'Curso invalido'
             }
         }
+
+    //Identificar se a algo na url referente a curso e status, caso não tenha nada na url, traz a função que lista todos os alunos
     } else {
         //Chamada da função que vai listar todos os cursos
         let alunos2 = alunos.getAlunos()
