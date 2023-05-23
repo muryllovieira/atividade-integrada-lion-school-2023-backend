@@ -24,6 +24,7 @@ const getCursos = function () {
         let jsonCurso = {}
         jsonCurso.sigla = sigla.sigla
         jsonCurso.icone = sigla.icone
+        jsonCurso.nome = sigla.nome
        
         arrayCursos.push(jsonCurso)
 
