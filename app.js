@@ -37,6 +37,23 @@ app.use((request, response, next) => {
 })
 
 // EndPoints
+app.get('/v1/lion-school', cors(), async function (request, response, next) {
+
+    let urlsArray = ["https://lion-school-2023.cyclic.app/v1/lion-school/cursos", "https://lion-school-2023.cyclic.app/v1/lion-school/alunos"]
+
+    var urlsJson = {
+        dados: urlsArray
+      };
+
+    //Tratamento para validar o sucesso da requisição
+    if (urlsJson) {
+        response.status(200)
+        response.json(urlsJson)
+    } else {
+        response.status(500)
+    }
+
+})
 
 //EndPoint para listar os cursos
 app.get('/v1/lion-school/cursos', cors(), async function (request, response, next) {
